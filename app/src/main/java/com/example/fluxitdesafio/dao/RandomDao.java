@@ -13,6 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RandomDao {
 
     public static final String BASE_URL = "https://randomuser.me/api/";
+
+
     private Retrofit retrofit;
     private RandomService randomService;
 
@@ -26,8 +28,8 @@ public class RandomDao {
     }
 
 
-    public void getUsers(final ResultListener<ResultUser> controllerListener) {
-        Call<ResultUser> call = randomService.getResults();
+    public void getUsers(String seed, final ResultListener<ResultUser> controllerListener, Integer page) {
+        Call<ResultUser> call = randomService.getResults(seed, page);
 
         call.enqueue(new Callback<ResultUser>() {
             @Override

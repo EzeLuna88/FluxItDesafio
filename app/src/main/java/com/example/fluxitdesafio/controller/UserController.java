@@ -6,18 +6,20 @@ import com.example.fluxitdesafio.utils.ResultListener;
 
 public class UserController {
 
+    private Integer page = 0;
     private RandomDao randomDao;
 
     public UserController() {
         this.randomDao = new RandomDao();
     }
 
-    public void getUsers(final ResultListener<ResultUser> viewListener) {
-        randomDao.getUsers(new ResultListener<ResultUser>() {
+    public void getUsers(final ResultListener<ResultUser> viewListener, String seed) {
+        randomDao.getUsers(seed, new ResultListener<ResultUser>() {
             @Override
             public void onFinish(ResultUser result) {
+                page = page + 1;
                 viewListener.onFinish(result);
             }
-        });
+        }, page);
     }
 }

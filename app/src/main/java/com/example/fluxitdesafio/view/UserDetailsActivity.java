@@ -45,7 +45,7 @@ public class UserDetailsActivity extends AppCompatActivity {
         textViewNameUserDetailsActivity.setText(user.getName().getTitle() + " "
                 + user.getName().getFirst() + " "
                 + user.getName().getLast());
-        textViewAgeUserDetailsActivity.setText(user.getDob().getAge());
+        textViewAgeUserDetailsActivity.setText(Integer.toString(user.getDob().getAge()));
         textViewEmailUserDetailsActivity.setText(user.getEmail());
 
 
