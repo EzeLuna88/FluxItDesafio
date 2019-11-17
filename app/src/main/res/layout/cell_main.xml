@@ -6,30 +6,41 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:elevation="5dp"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="5dp">
 
-        <ImageView
 
-            android:id="@+id/imageViewThumbnailMain"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp" />
-
-        <TextView
-            android:id="@+id/textViewUsernameMain"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="UserName"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
 
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/imageViewThumbnailMain"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:id="@+id/textViewUsernameMain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="UserName"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

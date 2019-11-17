@@ -21,9 +21,11 @@ import butterknife.ButterKnife;
 public class UserAdapter extends RecyclerView.Adapter {
 
     private List<User> userList;
+    private UserAdapterListener userAdapterListener;
 
-    public UserAdapter(List<User> userList) {
+    public UserAdapter(List<User> userList, UserAdapterListener listener) {
         this.userList = userList;
+        this.userAdapterListener = listener;
     }
 
     @NonNull
@@ -59,6 +61,14 @@ public class UserAdapter extends RecyclerView.Adapter {
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Integer adapterPosition = getAdapterPosition();
+                    User user = userList.get(adapterPosition);
+                    userAdapterListener.listenerSelectionUser(adapterPosition);
+                }
+            });
         }
 
         public void bindUser(User userCell) {
@@ -66,8 +76,12 @@ public class UserAdapter extends RecyclerView.Adapter {
             Glide.with(itemView)
                     .load(this.userCell.getPicture().getThumbnail())
                     .into(imageViewThumbnailMain);
-            textViewUsernameMain.setText(this.userCell.getName().getTitle() + this.userCell.getName().getFirst() + this.userCell.getName().getLast());
+            textViewUsernameMain.setText(this.userCell.getName().getTitle() + " " + this.userCell.getName().getFirst() + " " + this.userCell.getName().getLast());
 
         }
+    }
+
+    public interface UserAdapterListener {
+        public void listenerSelectionUser(Integer position);
     }
 }

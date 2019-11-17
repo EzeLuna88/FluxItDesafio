@@ -11,6 +11,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:id="@+id/progressBarMainActivity"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewMainActivity"
             android:layout_width="match_parent"
