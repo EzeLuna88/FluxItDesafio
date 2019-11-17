@@ -3,6 +3,7 @@ package com.example.fluxitdesafio.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
 
     List<User> userList;
     private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
         setContentView(R.layout.activity_main);
 
         progressBar = findViewById(R.id.progressBarMainActivity);
-
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayourMainActivity);
 
         final RecyclerView recyclerView = findViewById(R.id.recyclerViewMainActivity);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -56,9 +59,33 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
             }
         });
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                UserController userController1 = new UserController();
+                userController1.getUsers(new ResultListener<ResultUser>() {
+                    @Override
+                    public void onFinish(ResultUser result) {
+                        userList = result.getResults();
+                        if (userList != null) {
+                            Toast.makeText(MainActivity.this, "Pedido exitoso", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Pedido fallido", Toast.LENGTH_SHORT).show();
+                        }
+                        UserAdapter userAdapter = new UserAdapter(userList, MainActivity.this);
+                        recyclerView.setAdapter(userAdapter);
+
+
+                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setItemViewCacheSize(20);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+            }
+        });
 
     }
-
 
     @Override
     public void listenerSelectionUser(Integer position, User user) {
@@ -68,9 +95,8 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
         bundle.putSerializable(UserDetailsActivity.KEY_USER, user);
         intent.putExtras(bundle);
         startActivity(intent);
-
-
     }
+
 
 
 }
