@@ -3,7 +3,9 @@ package com.example.fluxitdesafio.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Login {
+import java.io.Serializable;
+
+public class Login implements Serializable {
 
     @SerializedName("uuid")
     @Expose

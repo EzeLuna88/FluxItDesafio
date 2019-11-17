@@ -2,9 +2,10 @@ package com.example.fluxitdesafio.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class User {
+public class User implements Serializable {
 
     @SerializedName("gender")
     private String gender;

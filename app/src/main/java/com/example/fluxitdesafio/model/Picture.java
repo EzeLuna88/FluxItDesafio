@@ -2,7 +2,9 @@ package com.example.fluxitdesafio.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Picture extends User {
+import java.io.Serializable;
+
+public class Picture implements Serializable {
 
     @SerializedName("large")
     private String large;

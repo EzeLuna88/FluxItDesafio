@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
 
 
         final RecyclerView recyclerView = findViewById(R.id.recyclerViewMainActivity);
-
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -63,13 +61,17 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
 
 
     @Override
-    public void listenerSelectionUser(Integer position) {
+    public void listenerSelectionUser(Integer position, User user) {
         Intent intent = new Intent(MainActivity.this, UserDetailsActivity.class);
         Bundle bundle = new Bundle();
+        bundle.putInt(UserDetailsActivity.KEY_POSITION, position);
+        bundle.putSerializable(UserDetailsActivity.KEY_USER, user);
         intent.putExtras(bundle);
         startActivity(intent);
 
 
     }
+
+
 }
 

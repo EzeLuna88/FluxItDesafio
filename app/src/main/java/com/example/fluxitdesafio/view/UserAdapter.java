@@ -66,7 +66,7 @@ public class UserAdapter extends RecyclerView.Adapter {
                 public void onClick(View view) {
                     Integer adapterPosition = getAdapterPosition();
                     User user = userList.get(adapterPosition);
-                    userAdapterListener.listenerSelectionUser(adapterPosition);
+                    userAdapterListener.listenerSelectionUser(adapterPosition, user);
                 }
             });
         }
@@ -82,6 +82,6 @@ public class UserAdapter extends RecyclerView.Adapter {
     }
 
     public interface UserAdapterListener {
-        public void listenerSelectionUser(Integer position);
+        public void listenerSelectionUser(Integer position, User user);
     }
 }

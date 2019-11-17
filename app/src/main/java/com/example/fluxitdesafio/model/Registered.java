@@ -3,7 +3,9 @@ package com.example.fluxitdesafio.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Registered {
+import java.io.Serializable;
+
+public class Registered implements Serializable {
     @SerializedName("date")
     @Expose
     private String date;
