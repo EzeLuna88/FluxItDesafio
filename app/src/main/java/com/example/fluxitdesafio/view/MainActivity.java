@@ -23,6 +23,7 @@ import com.example.fluxitdesafio.model.ResultUser;
 import com.example.fluxitdesafio.model.User;
 import com.example.fluxitdesafio.utils.ResultListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements UserAdapter.UserAdapterListener {
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getUsers();
+                getUsersSwipe();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -72,22 +73,11 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
                 Integer position = layoutManager.findLastVisibleItemPosition();
                 Integer lastCell = layoutManager.getItemCount();
 
-                if (position.equals(lastCell - 4)) {
+                if (position.equals(lastCell - 5)) {
                     userController.getUsers(new ResultListener<ResultUser>() {
                         @Override
                         public void onFinish(ResultUser result) {
-                            userList.addAll(result.getResults());
-                            seed = result.getInfo().getSeed();
-                            if (userList != null) {
-                                Toast.makeText(MainActivity.this, "Pedido exitoso", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(MainActivity.this, "Pedido fallido", Toast.LENGTH_SHORT).show();
-                            }
-                            UserAdapter userAdapter = new UserAdapter(userList, MainActivity.this);
-                            recyclerView.setAdapter(userAdapter);
-                            recyclerView.setHasFixedSize(true);
-                            recyclerView.setItemViewCacheSize(20);
-                            progressBar.setVisibility(View.INVISIBLE);
+                            getUsers();
                         }
                     }, seed);
                 }
@@ -108,6 +98,30 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
     public void getUsers() {
         userController.getUsers(new ResultListener<ResultUser>() {
 
+            @Override
+            public void onFinish(ResultUser result) {
+                if (userList == null) {
+                    userList = result.getResults();
+                    seed = result.getInfo().getSeed();
+                    if (userList != null) {
+                        Toast.makeText(MainActivity.this, "Pedido exitoso", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Pedido fallido", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    userList.addAll(result.getResults());
+                }
+                UserAdapter userAdapter = new UserAdapter(userList, MainActivity.this);
+                recyclerView.setAdapter(userAdapter);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setItemViewCacheSize(20);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        }, seed);
+    }
+
+    public void getUsersSwipe() {
+        userController.getUsers(new ResultListener<ResultUser>() {
             @Override
             public void onFinish(ResultUser result) {
                 userList = result.getResults();
@@ -151,7 +165,19 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
     }
 
     public void search(String name) {
-        userController.getUsersSearch(new ResultListener<ResultUser>() {
+        List<User> users = new ArrayList<>();
+        for (User user : userList) {
+            if (user.getName().getFirst().contains(name) || user.getName().getLast().contains(name)) {
+                users.add(user);
+            }
+            UserAdapter userAdapter = new UserAdapter(users, MainActivity.this);
+            recyclerView.setAdapter(userAdapter);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setItemViewCacheSize(20);
+        }
+    }
+
+       /* userController.getUsersSearch(new ResultListener<ResultUser>() {
             @Override
             public void onFinish(ResultUser result) {
                 userList = result.getResults();
@@ -163,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
                 progressBar.setVisibility(View.INVISIBLE);
             }
         }, seed, name);
-    }
+    }*/
 }
 
 
