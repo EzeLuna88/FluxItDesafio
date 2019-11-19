@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayourMainActivity);
 
 
-
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -110,13 +109,13 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
                     } else {
                         Toast.makeText(MainActivity.this, "Pedido fallido", Toast.LENGTH_SHORT).show();
                     }
+                    UserAdapter userAdapter = new UserAdapter(userList, MainActivity.this);
+                    recyclerView.setAdapter(userAdapter);
+                    recyclerView.setHasFixedSize(true);
+                    recyclerView.setItemViewCacheSize(20);
                 } else {
                     userList.addAll(result.getResults());
                 }
-                UserAdapter userAdapter = new UserAdapter(userList, MainActivity.this);
-                recyclerView.setAdapter(userAdapter);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setItemViewCacheSize(20);
                 progressBar.setVisibility(View.GONE);
 
             }
@@ -172,7 +171,9 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
     public void search(String name) {
         List<User> users = new ArrayList<>();
         for (User user : userList) {
-            if (user.getName().getFirst().contains(name) || user.getName().getLast().contains(name)) {
+            String firstName = user.getName().getFirst().toLowerCase();
+            String lastName = user.getName().getLast().toLowerCase();
+            if (firstName.contains(name) || lastName.contains(name)) {
                 users.add(user);
             }
             UserAdapter userAdapter = new UserAdapter(users, MainActivity.this);

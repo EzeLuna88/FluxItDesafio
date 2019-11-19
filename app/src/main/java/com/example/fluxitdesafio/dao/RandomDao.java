@@ -46,22 +46,5 @@ public class RandomDao {
 
     }
 
-    public void getUsersSearch(String seed, String name, final ResultListener<ResultUser> controllerListener) {
-        Call<ResultUser> call = randomService.getResultsSearch(seed, name);
 
-        call.enqueue(new Callback<ResultUser>() {
-            @Override
-            public void onResponse(Call<ResultUser> call, Response<ResultUser> response) {
-                ResultUser resultUser = response.body();
-                controllerListener.onFinish(resultUser);
-            }
-
-            @Override
-            public void onFailure(Call<ResultUser> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-
-
-    }
 }

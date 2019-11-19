@@ -25,12 +25,5 @@ public class UserController {
         }, page);
     }
 
-    public void getUsersSearch(final ResultListener<ResultUser> viewListener, String seed, String name) {
-        randomDao.getUsersSearch(seed, name, new ResultListener<ResultUser>() {
-            @Override
-            public void onFinish(ResultUser result) {
-                viewListener.onFinish(result);
-            }
-        });
-    }
+
 }
