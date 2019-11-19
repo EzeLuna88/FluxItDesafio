@@ -42,18 +42,18 @@ public class UserDetailsActivity extends AppCompatActivity implements UserLocati
     private String longitude;
     private User user;
 
-    public static final String KEY_POSITION = "position";
+
     public static final String KEY_USER = "user";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
+
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        Integer position = bundle.getInt(KEY_POSITION);
         user = (User) bundle.getSerializable(KEY_USER);
         Glide.with(this)
                 .load(user.getPicture().getLarge())
@@ -64,6 +64,12 @@ public class UserDetailsActivity extends AppCompatActivity implements UserLocati
         textViewAgeUserDetailsActivity.setText(Integer.toString(user.getDob().getAge()));
         textViewEmailUserDetailsActivity.setText(user.getEmail());
 
+        location();
+
+
+    }
+
+    private void location() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         if (ActivityCompat.checkSelfPermission(UserDetailsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -86,10 +92,6 @@ public class UserDetailsActivity extends AppCompatActivity implements UserLocati
                 }
             }
         });
-
-
-
-
     }
 
 

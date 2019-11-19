@@ -3,6 +3,7 @@ package com.example.fluxitdesafio.view;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.fluxitdesafio.R;
@@ -30,13 +32,10 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
 
 
     List<User> userList;
-    private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     UserController userController;
     private String seed;
-    private String name;
-    private Integer pageSize = 20;
 
 
     @Override
@@ -44,10 +43,9 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewMainActivity);
-
-        progressBar = findViewById(R.id.progressBarMainActivity);
+        recyclerView = findViewById(R.id.recyclerViewMainActivity);
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayourMainActivity);
+
 
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
@@ -57,7 +55,10 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
 
         getUsers();
 
+        swipe(layoutManager);
+    }
 
+    private void swipe(final LinearLayoutManager layoutManager) {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -89,13 +90,15 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
     public void listenerSelectionUser(Integer position, User user) {
         Intent intent = new Intent(MainActivity.this, UserDetailsActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putInt(UserDetailsActivity.KEY_POSITION, position);
+
         bundle.putSerializable(UserDetailsActivity.KEY_USER, user);
         intent.putExtras(bundle);
         startActivity(intent);
     }
 
     public void getUsers() {
+        final ProgressBar progressBar = findViewById(R.id.progressBarMainActivity);
+        progressBar.setVisibility(View.VISIBLE);
         userController.getUsers(new ResultListener<ResultUser>() {
             @Override
             public void onFinish(ResultUser result) {
@@ -114,12 +117,15 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
                 recyclerView.setAdapter(userAdapter);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setItemViewCacheSize(20);
-                progressBar.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.GONE);
+
             }
         }, seed);
     }
 
     public void getUsersSwipe() {
+        final ProgressBar progressBar = findViewById(R.id.progressBarMainActivity);
+        progressBar.setVisibility(View.VISIBLE);
         userController.getUsers(new ResultListener<ResultUser>() {
             @Override
             public void onFinish(ResultUser result) {
@@ -134,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
                 recyclerView.setAdapter(userAdapter);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setItemViewCacheSize(20);
-                progressBar.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         }, seed);
     }

@@ -51,11 +51,8 @@ public class UserLocationFragment extends Fragment {
     TextView textViewCountryFragment;
     @BindView(R.id.textViewCoordinatesFragment)
     TextView textViewCoordinatesFragment;
-
     @BindView(R.id.textViewMyCoordinatesFragment)
     TextView textViewMyCoordinatesFragment;
-
-
 
     private FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -79,15 +76,17 @@ public class UserLocationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_user_location, container, false);
         ButterKnife.bind(this, view);
 
-
         Bundle bundle = getArguments();
         User user = (User) bundle.getSerializable(KEY_USER);
         String latitude = bundle.getString(KEY_LATITUDE);
         String longitude = bundle.getString(KEY_LONGITUDE);
 
+        setInfo(user, latitude, longitude);
 
+        return view;
+    }
 
-
+    private void setInfo(User user, String latitude, String longitude) {
         String city = user.getLocation().getCity();
         String street = Integer.toString(user.getLocation().getStreet().getNumber()) + " " + user.getLocation().getStreet().getName();
         String state = user.getLocation().getState();
@@ -99,11 +98,6 @@ public class UserLocationFragment extends Fragment {
         textViewCountryFragment.setText(country);
         textViewCoordinatesFragment.setText(coordinates);
         textViewMyCoordinatesFragment.setText(latitude + " " + longitude);
-
-
-
-
-        return view;
     }
 
     public interface NotifyActivity {
