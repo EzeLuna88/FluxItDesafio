@@ -2,12 +2,17 @@ package com.example.fluxitdesafio.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -29,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
     private RecyclerView recyclerView;
     UserController userController;
     private String seed;
+    private String name;
+    private Integer pageSize = 20;
 
 
     @Override
@@ -66,7 +73,23 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
                 Integer lastCell = layoutManager.getItemCount();
 
                 if (position.equals(lastCell - 4)) {
-                    getUsers();
+                    userController.getUsers(new ResultListener<ResultUser>() {
+                        @Override
+                        public void onFinish(ResultUser result) {
+                            userList.addAll(result.getResults());
+                            seed = result.getInfo().getSeed();
+                            if (userList != null) {
+                                Toast.makeText(MainActivity.this, "Pedido exitoso", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MainActivity.this, "Pedido fallido", Toast.LENGTH_SHORT).show();
+                            }
+                            UserAdapter userAdapter = new UserAdapter(userList, MainActivity.this);
+                            recyclerView.setAdapter(userAdapter);
+                            recyclerView.setHasFixedSize(true);
+                            recyclerView.setItemViewCacheSize(20);
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
+                    }, seed);
                 }
             }
         });
@@ -96,13 +119,50 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
                 }
                 UserAdapter userAdapter = new UserAdapter(userList, MainActivity.this);
                 recyclerView.setAdapter(userAdapter);
-
-
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setItemViewCacheSize(20);
                 progressBar.setVisibility(View.INVISIBLE);
             }
         }, seed);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) menu.findItem(R.id.itemToolbarSearchView).getActionView();
+        MenuItem searchMenuItem = menu.findItem(R.id.itemToolbarSearchView);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                search(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                search(s);
+                return false;
+            }
+        });
+        return true;
+    }
+
+    public void search(String name) {
+        userController.getUsersSearch(new ResultListener<ResultUser>() {
+            @Override
+            public void onFinish(ResultUser result) {
+                userList = result.getResults();
+                seed = result.getInfo().getSeed();
+                UserAdapter userAdapter = new UserAdapter(userList, MainActivity.this);
+                recyclerView.setAdapter(userAdapter);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setItemViewCacheSize(20);
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+        }, seed, name);
     }
 }
 

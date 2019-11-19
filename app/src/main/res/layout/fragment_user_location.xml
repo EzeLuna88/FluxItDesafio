@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/guideline"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:paddingLeft="10dp">
+
+    <TextView
+        android:id="@+id/streetTitleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Street: "
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewStreetFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toRightOf="@id/streetTitleFragment"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/cityTitleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="City: "
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/streetTitleFragment" />
+
+    <TextView
+        android:id="@+id/textViewCityFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toRightOf="@id/cityTitleFragment"
+        app:layout_constraintTop_toBottomOf="@id/textViewStreetFragment" />
+
+    <TextView
+        android:id="@+id/stateTitleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="State: "
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cityTitleFragment" />
+
+    <TextView
+        android:id="@+id/textViewStateFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toRightOf="@id/stateTitleFragment"
+        app:layout_constraintTop_toBottomOf="@id/textViewCityFragment" />
+
+
+    <TextView
+        android:id="@+id/countryTitleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Country: "
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stateTitleFragment" />
+
+    <TextView
+        android:id="@+id/textViewCountryFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toRightOf="@id/countryTitleFragment"
+        app:layout_constraintTop_toBottomOf="@id/textViewStateFragment" />
+
+
+    <TextView
+        android:id="@+id/coordinatesTitleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Coordinates: "
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/countryTitleFragment" />
+
+    <TextView
+        android:id="@+id/textViewCoordinatesFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        app:layout_constraintLeft_toRightOf="@id/coordinatesTitleFragment"
+        app:layout_constraintTop_toBottomOf="@id/textViewCountryFragment" />
+
+    <TextView
+        android:id="@+id/myCoordinatesTitleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="My coordinates: "
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/coordinatesTitleFragment" />
+
+    <TextView
+        android:id="@+id/textViewMyCoordinatesFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toRightOf="@id/myCoordinatesTitleFragment"
+        app:layout_constraintTop_toBottomOf="@id/textViewCoordinatesFragment" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
