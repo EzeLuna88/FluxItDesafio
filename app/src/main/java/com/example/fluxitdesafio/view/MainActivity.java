@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
 
     public void getUsers() {
         userController.getUsers(new ResultListener<ResultUser>() {
-
             @Override
             public void onFinish(ResultUser result) {
                 if (userList == null) {
@@ -177,19 +176,7 @@ public class MainActivity extends AppCompatActivity implements UserAdapter.UserA
         }
     }
 
-       /* userController.getUsersSearch(new ResultListener<ResultUser>() {
-            @Override
-            public void onFinish(ResultUser result) {
-                userList = result.getResults();
-                seed = result.getInfo().getSeed();
-                UserAdapter userAdapter = new UserAdapter(userList, MainActivity.this);
-                recyclerView.setAdapter(userAdapter);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setItemViewCacheSize(20);
-                progressBar.setVisibility(View.INVISIBLE);
-            }
-        }, seed, name);
-    }*/
+
 }
 
 
